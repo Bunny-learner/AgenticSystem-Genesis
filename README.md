@@ -13,10 +13,12 @@ This project is a conversational agent built using [LangGraph](https://github.co
 - 🤖 **Conversational Memory** managed through LangGraph state: Maintains context across turns in a conversation, allowing for more natural and continuous interactions.
 
 ---
-## Workflow
+## Workflow for Agent.py
 
 ![agent_workflow](https://github.com/user-attachments/assets/3eef427a-10cd-4922-9ea2-b480c05aa044)
 
+## Workflow for rag_weather_agent.py
+![rag_weather](https://github.com/user-attachments/assets/dd281fb9-84dd-4943-ac00-cbb8ad4094a5)
 
 ## Installations
 
