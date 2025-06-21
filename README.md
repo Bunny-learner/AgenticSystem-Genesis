@@ -63,8 +63,8 @@ Once the installation and configuration are complete, you can run the main agent
 ```bash
 python Agent.py
 ```
-
-### kindly use file keyword when querying about the file.
+![note](https://img.shields.io/badge/Important-Note-blue)
+#### kindly use file keyword when querying about the file.
 
 #### In the terminal:
 ```bash
