@@ -1,0 +1,9 @@
+langgraph
+langchain
+langchain-google-genai
+langchain-community
+langchain-chroma
+huggingface-hub
+requests
+python-dotenv
+huggingface_community
