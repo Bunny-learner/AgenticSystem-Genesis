@@ -62,3 +62,10 @@ Once the installation and configuration are complete, you can run the main agent
 
 ```bash
 python Agent.py
+```
+
+####In the terminal:
+```bash
+You: what is Goods and Services Tax?
+You: what is the weather in kadapa?
+You: tell me about Captain America in the file?
