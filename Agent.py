@@ -138,8 +138,6 @@ def decide(state:AgentState)->bool:
     """ Route to the tool provided based on the ToolMessage"""
     last=state["messages"][-1]
     last_message=last.content.lower()
-    print("inside the decide:")
-    print(last)
     if hasattr(last,"tool_calls") and last.tool_calls:
         return True
     else:
