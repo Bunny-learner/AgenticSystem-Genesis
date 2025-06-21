@@ -64,8 +64,10 @@ Once the installation and configuration are complete, you can run the main agent
 python Agent.py
 ```
 
-####In the terminal:
+### kindly use file keyword when querying about the file.
+
+#### In the terminal:
 ```bash
 You: what is Goods and Services Tax?
-You: what is the weather in kadapa?
+You: give me humdity,visibility  and coordinates of  kadapa?
 You: tell me about Captain America in the file?
