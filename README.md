@@ -1,39 +1,60 @@
-# RAG-Weather-Agent 
 
-This project is a conversational agent built using [LangGraph](https://github.com/langchain-ai/langgraph) that can:
-- Retrieve answers from a file using RAG (Retrieval-Augmented Generation)
-- Provide real-time weather data using OpenWeather API
+# Agentic System
 
----
+## 🧠 Capabilities
 
-##  Features
+### 🧾 1. File-Based Question Answering (RAG)
 
-- 📄 **File-based QA** using LangChain + ChromaDB: The agent can answer questions by retrieving relevant information from a local text file (`file.txt`) which is indexed and stored in a ChromaDB vector store.
-- 🌦️ **Live Weather Retrieval** using a tool and OpenWeatherMap API: Integrates with the OpenWeatherMap API to fetch and provide real-time weather data for specified locations.
-- 🤖 **Conversational Memory** managed through LangGraph state: Maintains context across turns in a conversation, allowing for more natural and continuous interactions.
+- Loads and indexes any `.txt` file using LangChain’s `TextLoader`
+- Splits content using `RecursiveCharacterTextSplitter`
+- Embeds using **BAAI/bge-large-en-v1.5**
+- Stored in ChromaDB (`temporary_cache` collection)
+- Retrieves and responds to file-specific queries
 
----
-## Workflow for Agent.py
+### 🌐 2. Web Search
 
-![agent_workflow](https://github.com/user-attachments/assets/3eef427a-10cd-4922-9ea2-b480c05aa044)
+Two search modes, chosen by the ML classifier:
 
-## Workflow for rag_weather_agent.py
-![rag_weather](https://github.com/user-attachments/assets/dd281fb9-84dd-4943-ac00-cbb8ad4094a5)
+#### 🔹 Basic Search (`basic_search`)
+- Uses [SerpAPI](https://serpapi.com/) to fetch metadata (title, snippet, URL)
+- Fast, ideal for factual lookups
+
+#### 🔹 Deep Search (`deep_search`)
+- Scrapes full content using **Crawlbase API**
+- Converts HTML to Markdown for readability
+- Stores responses in **`web_cache`** vectorstore (ChromaDB)
+- Future calls can retrieve without re-scraping
+
+### 🧩 3. Sub-query Classification
+
+- Uses a trained ML classifier (`joblib` + `label_encoder`)
+- Splits compound queries like:
+  
+user-attachments/assets/dd281fb9-84dd-4943-ac00-cbb8ad4094a5)
 
 ## Installations
 
 To set up and run the RAG-Weather-Agent, follow these steps:
 
+
+## Workflow
+![agent](https://github.com/user-attachments/assets/d982758d-5f83-46bb-a7f8-f6e37d074ccc)
+
+
+
 1.  **Project Structure:**
 
     ```
     .
-    ├── Agent.py                # Main script (LangGraph agent)
-    ├── file.txt                # Your document for RAG
-    ├── chromadb/               # Chroma vector store (persisted)
-    ├── agent_workflow.png      # Visual of LangGraph workflow
-    ├── .env                    # API keys
-    └── requirements.txt        # Python dependencies
+    ├── Agent.py  # Main graph engine
+    ├── chromadb/      # Stores web_cache & temporary_cache
+    ├── file.txt     # Sample text file for file-based queries
+    ├── agent_workflow.png     # Mermaid diagram of LangGraph
+    ├── intent_classifier.pkl     # Trained classifier (joblib)
+    ├── label_encoder.pkl # Class label encoder
+    ├── .env # API keys
+    ├── requirements.txt # All Python dependencies## Workflow for Agent.py
+
     ```
 
 2.  **Create and Configure `.env` file:**
@@ -66,21 +87,49 @@ Once the installation and configuration are complete, you can run the main agent
 python Agent.py
 ```
 ![note](https://img.shields.io/badge/Important-Note-red)
-### does not remember previous converstations.
+## does not remember previous converstations.
 
-![note](https://img.shields.io/badge/Important-Note-blue)
-#### kindly use file keyword when querying about the file.
+### Some examples of the answers system provided
 
-#### In the terminal:
-```bash
-You: tell me whether it rains in kadapa and what is the capital of delhi and is chicken nonveg or veg and calculate sum of first seven prime numbers and what is definetion of indirect taxes from the document?
-Ai::  Based on the provided data:
-* **Weather in Kadapa:** The weather in Kadapa is overcast with a temperature of 28.81°C and 59% humidity.
+```
+You: hi
+🤖: Hello! How can I help you today?
+You: tell me some free gpu provider in cloud?
+🤖: Here are some cloud providers that offer free GPU access, often with certain limitations:
 
-* **Capital of Delhi:**  The capital of Delhi is not found in the provided text.
+*   **Google Colab**
+    *   **Details:** A very popular choice, offering GPUs like NVIDIA K80/T4. Free sessions typically have a duration limit (e.g., 12 hours per session).    
+    *   **Sources:**
+        *   [https://zackproser.com/blog/cloud-gpu-services-jupyter-notebook-reviewed](https://zackproser.com/blog/cloud-gpu-services-jupyter-notebook-reviewed)
+        *   [https://codesphere.com/articles/5-best-free-cloud-gpu-providers-for-hobbyists](https://codesphere.com/articles/5-best-free-cloud-gpu-providers-for-hobbyists)
+        *   [https://www.geeksforgeeks.org/deep-learning/the-top-3-free-gpu-resources-to-train-deep-neural-network/](https://www.geeksforgeeks.org/deep-learning/the-top-3-free-gpu-resources-to-train-deep-neural-network/)
+        *   [https://research.aimultiple.com/free-cloud-gpu/](https://research.aimultiple.com/free-cloud-gpu/)
 
-* **Chicken:** Chicken is non-vegetarian.
+*   **Kaggle**
+    *   **Details:** Provides access to NVIDIA TESLA P100 GPUs, often used for data science competitions and personal projects.
+    *   **Sources:**
+        *   [https://codesphere.com/articles/5-best-free-cloud-gpu-providers-for-hobbyists](https://codesphere.com/articles/5-best-free-cloud-gpu-providers-for-hobbyists)
+        *   [https://www.geeksforgeeks.org/deep-learning/the-top-3-free-gpu-resources-to-train-deep-neural-network/](https://www.geeksforgeeks.org/deep-learning/the-top-3-free-gpu-resources-to-train-deep-neural-network/)
+        *   [https://research.aimultiple.com/free-cloud-gpu/](https://research.aimultiple.com/free-cloud-gpu/)
 
-* **Sum of first seven prime numbers:** The first seven prime numbers are 2, 3, 5, 7, 11, 13, and 17. Their sum is 58.
+*   **Codesphere**
+    *   **Details:** Listed as a free cloud GPU provider suitable for hobbyists.
+    *   **Sources:**
+        *   [https://codesphere.com/articles/5-best-free-cloud-gpu-providers-for-hobbyists](https://codesphere.com/articles/5-best-free-cloud-gpu-providers-for-hobbyists)
+        *   [https://research.aimultiple.com/free-cloud-gpu/](https://research.aimultiple.com/free-cloud-gpu/)
 
-* **Definition of indirect taxes:**  The provided text gives a detailed explanation of the Goods and Services Tax (GST) in India, which is a significant indirect tax reform.  It replaced many central and state indirect taxes and operates under a dual GST model (CGST, SGST, IGST).  The document does not provide a general definition of indirect taxes beyond this specific example.
+*   **Gradient by Paperspace**
+    *   **Details:** Another option mentioned for free cloud GPU access.
+    *   **Sources:**
+        *   [https://zackproser.com/blog/cloud-gpu-services-jupyter-notebook-reviewed](https://zackproser.com/blog/cloud-gpu-services-jupyter-notebook-review        *   [https://codesphere.com/articles/5-best-free-cloud-gpu-providers-for-hobbyists](https://codesphere.com/articles/5-best-free-cloud-gpu-providers-for-hobbyists)
+
+*   **Microsoft Azure Notebooks (Azure ML)**
+    *   **Details:** Identified as a free GPU resource for training deep neural networks.
+    *   **Source:** [https://www.geeksforgeeks.org/deep-learning/the-top-3-free-gpu-resources-to-train-deep-neural-network/](https://www.geeksforgeeks.org/de
+
+**Important Considerations:**
+*   **Purpose:** These free services are generally best for learning, small projects, or light experimentation rather than heavy, continuous workloads.      
+*   **Paid Tiers:** Most of these providers also offer paid tiers with more robust GPU options and fewer limitations.
+You: thank you
+🤖: You're welcome! Is there anything else I can help you with?
+You: exit
