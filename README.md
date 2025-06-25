@@ -15,7 +15,7 @@
 
 Two search modes, chosen by the ML classifier:
 
-#### 🔹 Basic Search (`basic_search`)
+#### 🔹 Shallow Search (`shallow_search`)
 - Uses [SerpAPI](https://serpapi.com/) to fetch metadata (title, snippet, URL)
 - Fast, ideal for factual lookups
 
@@ -34,7 +34,6 @@ user-attachments/assets/dd281fb9-84dd-4943-ac00-cbb8ad4094a5)
 
 ## Installations
 
-To set up and run the RAG-Weather-Agent, follow these steps:
 
 
 ## Workflow
@@ -87,7 +86,6 @@ Once the installation and configuration are complete, you can run the main agent
 python Agent.py
 ```
 ![note](https://img.shields.io/badge/Important-Note-red)
-## does not remember previous converstations.
 
 ### Some examples of the answers system provided
 
