@@ -24,20 +24,14 @@ Two search modes, chosen by the ML classifier:
 - Converts HTML to Markdown for readability
 - Stores responses in **`web_cache`** vectorstore (ChromaDB)
 - Future calls can retrieve without re-scraping
-
-### 🧩 3. Sub-query Classification
-
-- Uses a trained ML classifier (`joblib` + `label_encoder`)
-- Splits compound queries like:
   
-user-attachments/assets/dd281fb9-84dd-4943-ac00-cbb8ad4094a5)
-
 ## Installations
 
 
 
 ## Workflow
-![agent](https://github.com/user-attachments/assets/d982758d-5f83-46bb-a7f8-f6e37d074ccc)
+
+![agent_workflow](https://github.com/user-attachments/assets/a6b768fc-bd98-4cf7-8f67-176195e7b649)
 
 
 
